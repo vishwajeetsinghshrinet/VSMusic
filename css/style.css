@@ -514,3 +514,51 @@ input[type="range"]::-webkit-slider-thumb {
     padding-bottom: 30px;
   }
 }
+
+/* ================================
+   Responsive Text
+   ================================ */
+
+.song-info,
+.current-song,
+.playlist-item {
+  min-width: 0;
+}
+
+.song-info h3,
+.song-info p,
+.current-song h2,
+.current-song p,
+.playlist-item h3,
+.playlist-item p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Keep song list layout stable */
+.song-item {
+  min-width: 0;
+}
+
+.song-info {
+  overflow: hidden;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .current-song h2 {
+    font-size: 18px;
+  }
+
+  .current-song p {
+    font-size: 13px;
+  }
+
+  .song-info h3 {
+    font-size: 15px;
+  }
+
+  .song-info p {
+    font-size: 12px;
+  }
+}
