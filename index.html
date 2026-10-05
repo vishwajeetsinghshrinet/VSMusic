@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="VSMusic - A modern web music player.">
+
+    <title>VSMusic</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="logo">
+            <h1>VSMusic</h1>
+        </div>
+
+        <button type="button" class="menu-button" aria-label="Open menu">
+            ☰
+        </button>
+    </header>
+
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Search -->
+        <section class="search-section">
+            <label for="searchInput">Search music</label>
+
+            <input type="search" id="searchInput" placeholder="Search songs, artists...">
+        </section>
+
+
+        <!-- Music Library -->
+        <section class="music-library">
+
+            <div class="section-header">
+                <h2>My Music</h2>
+
+                <button type="button" id="selectMusicButton">
+                    Add Music
+                </button>
+            </div>
+
+            <input type="file" id="musicFiles" accept="audio/*" multiple hidden>
+
+            <!-- Song List -->
+            <div class="song-list">
+
+                <article class="song-item">
+
+                    <div class="song-cover">
+                        <span>♪</span>
+                    </div>
+
+                    <div class="song-info">
+                        <h3>Song Title</h3>
+                        <p>Artist Name</p>
+                    </div>
+
+                    <button type="button" class="song-menu" aria-label="Song options">
+                        ⋮
+                    </button>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- Now Playing -->
+        <section class="now-playing">
+
+            <h2>Now Playing</h2>
+
+            <div class="album-art">
+                <span>♪</span>
+            </div>
+
+            <div class="current-song">
+
+                <h2 id="songTitle">No song selected</h2>
+
+                <p id="artistName">Unknown Artist</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Audio Player -->
+        <section class="player">
+
+            <!-- Progress -->
+            <div class="progress-container">
+
+                <span id="currentTime">0:00</span>
+
+                <input type="range" id="progressBar" min="0" max="100" value="0">
+
+                <span id="duration">0:00</span>
+
+            </div>
+
+
+            <!-- Player Controls -->
+            <div class="player-controls">
+
+                <button type="button" id="shuffleButton" aria-label="Shuffle">
+                    🔀
+                </button>
+
+                <button type="button" id="previousButton" aria-label="Previous song">
+                    ⏮
+                </button>
+
+                <button type="button" id="playButton" aria-label="Play">
+                    ▶
+                </button>
+
+                <button type="button" id="nextButton" aria-label="Next song">
+                    ⏭
+                </button>
+
+                <button type="button" id="repeatButton" aria-label="Repeat">
+                    🔁
+                </button>
+
+            </div>
+
+
+            <!-- Volume -->
+            <div class="volume-control">
+
+                <label for="volumeBar">Volume</label>
+
+                <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1">
+
+            </div>
+
+
+            <!-- HTML Audio Element -->
+            <audio id="audioPlayer"></audio>
+
+        </section>
+
+
+        <!-- Playlists -->
+        <section class="playlists">
+
+            <div class="section-header">
+                <h2>Playlists</h2>
+
+                <button type="button" id="createPlaylistButton">
+                    + Create
+                </button>
+            </div>
+
+            <div class="playlist-list">
+
+                <article class="playlist-item">
+                    <div class="playlist-cover">
+                        ♪
+                    </div>
+
+                    <div>
+                        <h3>Favorites</h3>
+                        <p>0 songs</p>
+                    </div>
+                </article>
+
+                <article class="playlist-item">
+                    <div class="playlist-cover">
+                        ♪
+                    </div>
+
+                    <div>
+                        <h3>Recently Played</h3>
+                        <p>0 songs</p>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-navigation" aria-label="Main navigation">
+
+        <button type="button" class="nav-item">
+            <span>⌂</span>
+            <span>Home</span>
+        </button>
+
+        <button type="button" class="nav-item">
+            <span>♫</span>
+            <span>Songs</span>
+        </button>
+
+        <button type="button" class="nav-item">
+            <span>♥</span>
+            <span>Favorites</span>
+        </button>
+
+        <button type="button" class="nav-item">
+            <span>☰</span>
+            <span>Playlists</span>
+        </button>
+
+    </nav>
+
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
