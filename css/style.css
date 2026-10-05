@@ -491,6 +491,15 @@ input[type="range"]::-webkit-slider-thumb {
   color: var(--accent);
 }
 
+/* Album Artwork */
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 35px;
+}
+
 /* ================================
    Desktop
    ================================ */

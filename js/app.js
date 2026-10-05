@@ -57,11 +57,15 @@ musicFiles.addEventListener("change", (event) => {
   files.forEach((file) => {
     const song = {
       name: file.name.replace(/\.[^/.]+$/, ""),
+      artist: "Unknown Artist",
+      cover: null,
       file: file,
       url: URL.createObjectURL(file),
     };
 
     songs.push(song);
+
+    readMetadata(file, song);
   });
 
   renderSongList();
@@ -127,12 +131,38 @@ function loadSong(index) {
   audioPlayer.src = song.url;
 
   songTitle.textContent = song.name;
-  artistName.textContent = "Local Music";
+  artistName.textContent = song.artist;
+
+  const albumArt = document.querySelector(".album-art");
+
+  if (song.cover) {
+    albumArt.innerHTML = `<img src="${song.cover}" alt="Album artwork">`;
+  } else {
+    albumArt.innerHTML = `<span>♪</span>`;
+  }
 
   progressBar.value = 0;
 
   currentTime.textContent = "0:00";
   duration.textContent = "0:00";
+
+  updateActiveSong();
+}
+
+// ================================
+// Active Song
+// ================================
+
+function updateActiveSong() {
+  const songItems = document.querySelectorAll(".song-item");
+
+  songItems.forEach((item, index) => {
+    if (index === currentSongIndex) {
+      item.classList.add("active");
+    } else {
+      item.classList.remove("active");
+    }
+  });
 }
 
 // ================================
@@ -330,4 +360,70 @@ function escapeHTML(text) {
   div.textContent = text;
 
   return div.innerHTML;
+}
+
+function readMetadata(file, song) {
+  jsmediatags.read(file, {
+    onSuccess: function (tag) {
+      const tags = tag.tags;
+      console.log("PICTURE:", tags.picture);
+
+      console.log(tags);
+
+      const filenameData = extractFilenameMetadata(file.name);
+
+      song.name = tags.title || filenameData.title;
+      song.artist = tags.artist || filenameData.artist;
+
+      if (tags.picture) {
+        const picture = tags.picture;
+
+        let base64String = "";
+
+        for (let i = 0; i < picture.data.length; i++) {
+          base64String += String.fromCharCode(picture.data[i]);
+        }
+
+        song.cover = `data:${picture.format};base64,${btoa(base64String)}`;
+      }
+
+      renderSongList();
+
+      if (songs[currentSongIndex] === song) {
+        loadSong(currentSongIndex);
+      }
+    },
+
+    onError: function (error) {
+      console.log("Metadata error:", error);
+    },
+  });
+}
+
+// ================================
+// Extract Artist & Song From Filename
+// ================================
+
+function extractFilenameMetadata(filename) {
+  // Remove file extension
+  let cleanName = filename.replace(/\.[^/.]+$/, "");
+
+  // Remove common quality information
+  cleanName = cleanName.replace(/\s*\(?\b(128|192|256|320)\s*kbps?\b\)?/gi, "");
+
+  // Artist - Song
+  if (cleanName.includes(" - ")) {
+    const parts = cleanName.split(" - ");
+
+    return {
+      artist: parts[0].trim(),
+      title: parts.slice(1).join(" - ").trim(),
+    };
+  }
+
+  // No artist detected
+  return {
+    artist: "Unknown Artist",
+    title: cleanName.trim(),
+  };
 }
